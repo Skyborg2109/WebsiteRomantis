@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Kesayanganku</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Three.js untuk Animasi 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'romantic-dark': '#1a0b16',
+                        'romantic-pink': '#ff4d6d',
+                        'romantic-light': '#ffe5ec',
+                    },
+                    fontFamily: {
+                        'cursive': ['Dancing Script', 'cursive'],
+                        'sans': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #1a0b16;
+            color: #ffe5ec;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a0b16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff4d6d;
+            border-radius: 10px;
+        }
+
+        /* Preloader Animation */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a0b16;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-out;
+        }
+        .heart-beat {
+            width: 50px;
+            height: 50px;
+            background-color: #ff4d6d;
+            position: relative;
+            transform: rotate(-45deg);
+            animation: heartbeat 1.2s infinite;
+        }
+        .heart-beat::before,
+        .heart-beat::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            background-color: #ff4d6d;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart-beat::before {
+            top: -25px;
+            left: 0;
+        }
+        .heart-beat::after {
+            top: 0;
+            left: 25px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: rotate(-45deg) scale(1); }
+            14% { transform: rotate(-45deg) scale(1.3); }
+            28% { transform: rotate(-45deg) scale(1); }
+            42% { transform: rotate(-45deg) scale(1.3); }
+            70% { transform: rotate(-45deg) scale(1); }
+        }
+
+        /* 3D Canvas Container */
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-romantic-pink selection:text-white">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="text-center">
+            <div class="heart-beat mx-auto mb-8"></div>
+            <p class="font-cursive text-2xl text-romantic-pink mt-4">Memuat rasa cinta...</p>
+        </div>
+    </div>
+
+    <!-- 3D Background Canvas for Hero Section -->
+    <div id="canvas-container"></div>
+
+    <!-- Main Content -->
+    <main class="relative z-10">
+        
+        <!-- Hero Section -->
+        <section id="beranda" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
+            <div class="glass-card p-8 md:p-12 max-w-2xl reveal mx-auto mt-20">
+                <h2 class="text-romantic-pink font-semibold tracking-widest uppercase text-sm mb-4">Untuk Perempuan Terhebatku</h2>
+                <h1 class="font-cursive text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-lg">
+                    Hai, Sayang <span class="text-romantic-pink">♥</span>
+                </h1>
+                <p class="text-lg md:text-xl font-light text-gray-300 mb-8 leading-relaxed">
+                    Website kecil ini kubuat khusus untukmu. Sebuah pengingat digital betapa berartinya dirimu dalam hidupku.
+                </p>
+                <a href="#pesan" class="inline-block px-8 py-3 rounded-full bg-romantic-pink text-white font-medium hover:bg-pink-600 transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(255,77,109,0.5)]">
+                    Scroll ke bawah ya
+                </a>
+            </div>
+            
+            <div class="absolute bottom-10 animate-bounce cursor-pointer opacity-70">
+                <a href="#pesan" class="text-romantic-pink">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Message Section -->
+        <section id="pesan" class="py-24 px-4 bg-gradient-to-b from-transparent to-[#2a0e22]">
+            <div class="max-w-4xl mx-auto reveal">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <!-- Placeholder for photo -->
+                        <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full border-4 border-romantic-pink p-2 floating overflow-hidden">
+                            <div class="w-full h-full rounded-full bg-gray-800 flex justify-center items-center overflow-hidden relative">
+                                <!-- Kamu bisa mengganti URL gambar di bawah ini dengan foto pasanganmu -->
+                                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bunga Mawar" class="object-cover w-full h-full opacity-80 hover:opacity-100 transition-opacity duration-500">
+                                <div class="absolute inset-0 bg-romantic-pink opacity-20 mix-blend-overlay"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 text-center md:text-left">
+                        <h2 class="font-cursive text-4xl md:text-5xl text-romantic-pink mb-6">Surat Kecilku...</h2>
+                        <p class="text-gray-300 text-lg leading-relaxed mb-4">
+                            Aku mungkin tidak selalu pandai merangkai kata romantis setiap hari. Tapi melalui halaman ini, aku ingin kamu tahu bahwa kamu adalah hal terbaik yang pernah terjadi padaku.
+                        </p>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            Terima kasih sudah selalu sabar, sudah menjadi rumah tempatku pulang, dan selalu menemaniku dalam setiap keadaan. Aku bersyukur memilikimu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reasons Section -->
+        <section id="alasan" class="py-24 px-4">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="font-cursive text-4xl md:text-5xl text-white mb-16 reveal">Hal yang Paling Aku Suka Darimu</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="glass-card p-8 reveal delay-100 hover:-translate-y-2 transition-transform duration-300 group">
+                        <div class="w-16 h-16 bg-romantic-pink/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-romantic-pink/40 transition-colors">
+                            <span class="text-3xl">✨</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-romantic-pink">Rambutmu</h3>
+                        <p class="text-gray-400 font-light">Wangi dan keindahannya selalu mempesona. Aku selalu merasa tenang setiap kali membelai rambutmu dengan lembut.</p>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="glass-card p-8 reveal delay-200 hover:-translate-y-2 transition-transform duration-300 group">
+                        <div class="w-16 h-16 bg-romantic-pink/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-romantic-pink/40 transition-colors">
+                            <span class="text-3xl">🥰</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-romantic-pink">Lesung Pipimu</h3>
+                        <p class="text-gray-400 font-light">Lesung pipimu membuat senyummu begitu manis, selalu berhasil mengalihkan duniaku setiap kali kamu tertawa.</p>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="glass-card p-8 reveal delay-300 hover:-translate-y-2 transition-transform duration-300 group">
+                        <div class="w-16 h-16 bg-romantic-pink/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-romantic-pink/40 transition-colors">
+                            <span class="text-3xl">🫂</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-romantic-pink">Kehadiranmu</h3>
+                        <p class="text-gray-400 font-light">Hanya dengan berada di dekatmu, aku merasa tenang, lengkap, dan merasa seperti berada di rumah.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / Closing -->
+        <footer class="py-12 text-center border-t border-white/10 mt-12 bg-black/30">
+            <p class="font-cursive text-3xl text-romantic-pink mb-2 reveal">I Love You</p>
+            <p class="text-sm text-gray-500 reveal">Dibuat dengan sepenuh hati ❤️</p>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // --- 1. Preloader Logic ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            // Sedikit delay agar animasi loading terlihat
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 1000);
+            }, 1500);
+        });
+
+        // --- 2. Scroll Reveal Animation Logic ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // Jarak dari bawah layar sebelum animasi muncul
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger sekali saat load
+        reveal();
+
+        // --- 3. Three.js 3D Heart Animation ---
+        window.onload = function() {
+            const container = document.getElementById('canvas-container');
+            
+            // Setup dasar Three.js
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Membuat Bentuk Hati
+            const x = 0, y = 0;
+            const heartShape = new THREE.Shape();
+            heartShape.moveTo( x + 5, y + 5 );
+            heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
+            heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7,x - 6, y + 7 );
+            heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
+            heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
+            heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
+            heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
+
+            // Pengaturan ekstrusi (ketebalan 3D)
+            const extrudeSettings = { depth: 2, bevelEnabled: true, bevelSegments: 3, steps: 2, bevelSize: 1, bevelThickness: 1 };
+            const geometry = new THREE.ExtrudeGeometry( heartShape, extrudeSettings );
+            
+            // Menyesuaikan posisi tengah dari geometri hati
+            geometry.center();
+            // Memutar hati agar posisinya tegak (default Three.js terbalik untuk path ini)
+            geometry.rotateX(Math.PI);
+
+            // Material bentuk hati
+            const material = new THREE.MeshStandardMaterial({ 
+                color: 0xff4d6d, 
+                roughness: 0.3, 
+                metalness: 0.2,
+                emissive: 0x4a0a1a,
+                emissiveIntensity: 0.5
+            });
+            
+            const heart = new THREE.Mesh( geometry, material );
+            // Mengatur ukuran hati 3D
+            heart.scale.set(0.15, 0.15, 0.15);
+            // Pindahkan sedikit ke atas agar tidak tertutup teks
+            heart.position.y = 1; 
+            scene.add( heart );
+
+            // Partikel melayang di background (Bintang/Debu romantis)
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 700;
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 50; // sebar partikel
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0xffe5ec,
+                transparent: true,
+                opacity: 0.8,
+            });
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            // Pencahayaan
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0xffffff, 1);
+            pointLight.position.set(10, 10, 10);
+            scene.add(pointLight);
+
+            const pointLight2 = new THREE.PointLight(0xff4d6d, 1);
+            pointLight2.position.set(-10, -10, 10);
+            scene.add(pointLight2);
+
+            // Posisi Kamera
+            camera.position.z = 8;
+
+            // Interaksi Mouse
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - windowHalfX);
+                mouseY = (event.clientY - windowHalfY);
+            });
+
+            // Animasi Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Rotasi otomatis bentuk hati
+                heart.rotation.y += 0.005;
+                
+                // Efek detak jantung menggunakan scale
+                const time = Date.now() * 0.0015;
+                const scale = 0.15 + Math.sin(time * 3) * 0.005;
+                heart.scale.set(scale, scale, scale);
+
+                // Gerakan partikel
+                particlesMesh.rotation.y += 0.001;
+                particlesMesh.rotation.x += 0.0005;
+
+                // Rotasi hati dipengaruhi oleh pergerakan mouse (Parallax ringan)
+                targetX = mouseX * 0.001;
+                targetY = mouseY * 0.001;
+                heart.rotation.y += 0.05 * (targetX - heart.rotation.y);
+                heart.rotation.x += 0.05 * (targetY - heart.rotation.x);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Responsif saat ukuran layar berubah
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+    </script>
+</body>
+</html>
